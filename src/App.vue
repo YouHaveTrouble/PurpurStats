@@ -1,15 +1,14 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <stats-page/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import StatsPage from "@/components/StatsPage";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    StatsPage
   }
 }
 </script>
@@ -20,7 +19,16 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+html,
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(90deg,#392955 0%,#3a6294 100%) fixed;
+  color: aliceblue;
+  min-height: 100vh;
 }
 </style>
