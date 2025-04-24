@@ -21,6 +21,7 @@ export default {
       versionCounts: {},
       chosenVersion: "",
       errored: false,
+      totalServers: 0,
     }
   },
   async mounted() {
@@ -31,14 +32,23 @@ export default {
     }
     const json = await purpurVersions.json();
     for (const entry in json) {
-      this.versions.push(json[entry].name);
-      this.versionCounts[json[entry].name] = json[entry].y;
+      const name = json[entry]?.name;
+      if (!name) continue;
+      if (!/^[0-9]+\.[0-9]+(\.[0-9]+)?$/.test(name)) continue;
+      const value = json[entry]?.y;
+      if (!Number.isInteger(value)) continue;
+      this.versions.push(name);
+      this.versionCounts[name] = value;
+      this.totalServers += value;
     }
 
     this.versions = this.versions.map( a => a.split('.').map( n => +n+100000 ).join('.') ).sort()
         .map( a => a.split('.').map( n => +n-100000 ).join('.') );
 
-    this.chosenVersion = this.versions[this.versions.length-1];
+    this.versions.push("All versions");
+    this.versionCounts["All versions"] = this.totalServers;
+
+    this.chosenVersion = this.versions[this.versions.length-2]; // default to the last version
   }
 }
 </script>
